@@ -5,6 +5,11 @@
   --color-gray700: #0d0d0d;
   --color-gray600: #1a1a1a;
   --color-gray500: #262626;
+  --color-gray300: #808080;
+  --color-gray400: #333333;
+  --color-gray200: #d9d9d9;
+  --color-gray100: #f2f2f2;
+  --color-delete: #e25858;
 }
 
 body {
@@ -79,6 +84,11 @@ button.btn {
   border: none;
   color: var(--color-font);
   font-size: 14px;
+  transition: 0.3s;
+}
+
+button.btn:hover {
+  background-color: var(--color-blue);
 }
 
 /* List */
@@ -93,22 +103,13 @@ ul.todo__list {
 
 ul.todo__list li {
   display: flex;
+  align-items: center;
   gap: 12px;
   color: var(--color-font);
   padding: 16px;
   border-radius: 8px;
   background-color: var(--color-gray500);
 }
-
-/* input#doneCheck {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-}
-
-input#checkbox:checked {
-  background-color: var(--color-purple);
-} */
 
 input[type='checkbox'] {
   display: none;
@@ -146,8 +147,28 @@ p.content {
   flex-grow: 1;
   font-size: 14px;
   line-height: 20px;
+  transition: 0.2s;
 }
 
 p.content.done {
+  color: var(--color-gray300);
   text-decoration: line-through;
+}
+
+.delete {
+  color: var(--color-gray300);
+  font-size: 18px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.delete:hover {
+  color: var(--color-delete);
+  background-color: var(--color-gray400);
 }

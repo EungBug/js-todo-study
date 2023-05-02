@@ -100,7 +100,9 @@ class TodoItem extends Component {
       <input type='checkbox' id='${item.id}'/>
       <label for='${item.id}'></label>
       <p class='content'>${item.content}</p>
-      <div class='delete'>delete</div>
+      <span class="material-symbols-outlined delete">
+        delete
+      </span>
     `;
 
     const contentEl = this.el.querySelector('.content');
