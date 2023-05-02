@@ -1,4 +1,4 @@
-import { saveTodoItem, getTodoItems } from './core/storage';
+import { saveTodoItem, getTodoItems, getTodoCount, changeTodoTaskDone } from './core/storage';
 
 export default class ToDo {
   constructor() {
@@ -9,12 +9,21 @@ export default class ToDo {
     return getTodoItems();
   }
 
+  getTotalCount() {
+    return getTodoCount();
+  }
+
   setTodoItem(todo) {
-    const item = { content: todo, checked: false };
+    const dateId = new Date().getTime();
+    const item = { content: todo, done: false, id: dateId };
     saveTodoItem(item);
     this.observers.forEach(observer => {
       observer(getTodoItems());
     });
+  }
+
+  onClickDoneCheck(id, done) {
+    changeTodoTaskDone(id, done);
   }
 
   subscribe(cb) {

@@ -1,19 +1,15 @@
 import Component from './core/Component';
 import ToDoManager from './todo';
 
+const todoManager = new ToDoManager();
 export default class App extends Component {
   render() {
-    const list = document.createElement('ul');
-    list.classList.add('todo__list');
+    const todoList = new TodoList([]);
 
-    const todoManager = new ToDoManager();
     todoManager.subscribe(todos => {
-      if (todos.length > 0) {
-        list.innerHTML = '';
-        todos.map(todo => {
-          const item = new TodoItem(todo).el;
-          list.append(item);
-        });
+      if (todos) {
+        todoList.props.todoList = todos;
+        todoList.render();
       }
     });
 
@@ -24,7 +20,7 @@ export default class App extends Component {
       }
     }).el;
 
-    this.el.append(header, inputBox, list);
+    this.el.append(header, inputBox, todoList.el);
   }
 }
 
@@ -68,6 +64,26 @@ class TodoInput extends Component {
   }
 }
 // ToDo 목록
+class TodoList extends Component {
+  constructor(todoList) {
+    super({
+      tagName: 'ul',
+      props: { todoList }
+    });
+  }
+
+  render() {
+    const { todoList } = this.props;
+
+    this.el.innerHTML = ``; // 목록 초기화
+    this.el.classList.add('todo__list');
+
+    todoList?.map(todo => {
+      const item = new TodoItem(todo).el;
+      this.el.append(item);
+    });
+  }
+}
 
 // ToDo Item
 class TodoItem extends Component {
@@ -75,15 +91,31 @@ class TodoItem extends Component {
     super({
       tagName: 'li',
       props: { item }
+      // onChangeDone
     });
   }
   render() {
     const { item } = this.props;
     this.el.innerHTML = `
-      <input type='checkbox' class='checkbox' />
+      <input type='checkbox' id='${item.id}'/>
+      <label for='${item.id}'></label>
       <p class='content'>${item.content}</p>
       <div class='delete'>delete</div>
     `;
+
+    const contentEl = this.el.querySelector('.content');
+    if (item.done) {
+      contentEl.classList.add('done');
+    }
+
+    const checkbox = this.el.querySelector('input');
+    checkbox.checked = item.done;
+
+    checkbox.addEventListener('click', event => {
+      // done 여부
+      todoManager.onClickDoneCheck(item.id, event.target.checked);
+      contentEl.classList.toggle('done');
+    });
   }
 }
 

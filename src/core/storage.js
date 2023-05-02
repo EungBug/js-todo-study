@@ -14,3 +14,16 @@ export function getTodoItems() {
   const savedList = JSON.parse(savedData) ?? [];
   return savedList;
 }
+
+export function getTodoCount() {
+  return getTodoItems().length;
+}
+
+export function changeTodoTaskDone(id, done) {
+  const savedList = getTodoItems();
+  const taskIndex = savedList.findIndex(item => {
+    return item.id === id;
+  });
+  savedList[taskIndex].done = done;
+  localStorage.setItem(_STORAGEKEY, JSON.stringify(savedList));
+}
