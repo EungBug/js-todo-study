@@ -50,11 +50,19 @@ class TodoInput extends Component {
   render() {
     const inputEl = document.createElement('input');
     inputEl.placeholder = '오늘 내가 해야 할 일은?';
+    inputEl.addEventListener('keydown', event => {
+      if (inputEl.value.trim() === '') return;
+      if (event.key === 'Enter' && !event.isComposing) {
+        this.props.addHandler(event.target.value);
+        event.target.value = '';
+      }
+    });
 
     const submitBtn = document.createElement('button');
     submitBtn.classList.add('btn');
     submitBtn.textContent = 'Do!';
     submitBtn.addEventListener('click', () => {
+      if (inputEl.value.trim() === '') return;
       this.props.addHandler(inputEl.value);
       inputEl.value = '';
     });
@@ -74,9 +82,15 @@ class TodoList extends Component {
 
   render() {
     const { todoList } = this.props;
-
-    this.el.innerHTML = ``; // 목록 초기화
     this.el.classList.add('todo__list');
+
+    todoList.length !== 0
+      ? (this.el.innerHTML = `
+          <div class="todo__count">
+            Task
+            <span>${todoList.length}</span>
+          </div>`)
+      : (this.el.innerHTML = '');
 
     todoList?.map(todo => {
       const item = new TodoItem(todo).el;
@@ -118,8 +132,10 @@ class TodoItem extends Component {
       todoManager.onClickDoneCheck(item.id, event.target.checked);
       contentEl.classList.toggle('done');
     });
+
+    const btnDelete = this.el.querySelector('.delete');
+    btnDelete.addEventListener('click', () => {
+      todoManager.deleteTodoItem(item.id);
+    });
   }
 }
-
-// 삭제버튼
-// 완료 체크 버튼

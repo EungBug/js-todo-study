@@ -1,4 +1,4 @@
-import { saveTodoItem, getTodoItems, getTodoCount, changeTodoTaskDone } from './core/storage';
+import { saveTodoItem, getTodoItems, getTodoCount, changeTodoTaskDone, deleteTodoTaskById } from './core/storage';
 
 export default class ToDo {
   constructor() {
@@ -24,6 +24,13 @@ export default class ToDo {
 
   onClickDoneCheck(id, done) {
     changeTodoTaskDone(id, done);
+  }
+
+  deleteTodoItem(id) {
+    deleteTodoTaskById(id);
+    this.observers.forEach(observer => {
+      observer(getTodoItems());
+    });
   }
 
   subscribe(cb) {

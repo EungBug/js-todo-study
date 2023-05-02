@@ -27,3 +27,11 @@ export function changeTodoTaskDone(id, done) {
   savedList[taskIndex].done = done;
   localStorage.setItem(_STORAGEKEY, JSON.stringify(savedList));
 }
+
+export function deleteTodoTaskById(id) {
+  const savedList = getTodoItems();
+  const newList = savedList.filter(item => {
+    return item.id !== id;
+  });
+  localStorage.setItem(_STORAGEKEY, JSON.stringify(newList));
+}
