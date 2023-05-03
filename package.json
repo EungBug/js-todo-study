@@ -11,5 +11,8 @@
   "devDependencies": {
     "sass": "^1.62.1",
     "vite": "^4.3.2"
+  },
+  "dependencies": {
+    "vercel": "^29.0.3"
   }
 }
