@@ -1,7 +1,9 @@
+/**
+ * 로컬 스토리지에 CRUD하는 함수들을 모듈화 한 스크립트 파일
+ */
 const _STORAGEKEY = 'ToDoList';
 
 export function saveTodoItem(item) {
-  // item = {content: '', checked: false }
   const savedData = localStorage.getItem(_STORAGEKEY);
   const savedList = JSON.parse(savedData) ?? [];
 

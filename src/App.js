@@ -1,6 +1,8 @@
 import Component from './core/Component';
 import ToDoManager from './todo';
 
+// ToDo class의 인스턴스를 전역으로 생성하여 모든 컴포넌트에서
+// 컴포넌트마다 필요한 기능을 호출 할 수 있도록 했음
 const todoManager = new ToDoManager();
 export default class App extends Component {
   render() {
@@ -100,6 +102,9 @@ class TodoList extends Component {
 }
 
 // ToDo Item
+// App 컴포넌트의 하위 컴포넌트로 현재는 모두 한 파일에 컴포넌트들이 있지만
+// 각각의 컴포넌트를 모듈화 한다면 ToDo 인스턴스를 어떻게 참조해야할지?
+// TodoItem의 매개변수로 받는 방법 이외
 class TodoItem extends Component {
   constructor(item) {
     super({
