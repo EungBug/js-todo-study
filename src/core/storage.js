@@ -1,39 +1,43 @@
-/**
- * 로컬 스토리지에 CRUD하는 함수들을 모듈화 한 스크립트 파일
- */
-const _STORAGEKEY = 'ToDoList';
+// 멘토링 피드백 반영
+// 재사용성을 고려하는 코딩이 필요
+export default class StorageUtil {
+  constructor(key) {
+    this.key = key;
+  }
 
-export function saveTodoItem(item) {
-  const savedData = localStorage.getItem(_STORAGEKEY);
-  const savedList = JSON.parse(savedData) ?? [];
+  setDataInList(item) {
+    const savedData = localStorage.getItem(this.key);
+    const savedList = JSON.parse(savedData) ?? [];
+    savedList.unshift(item);
+    localStorage.setItem(this.key, JSON.stringify(savedList));
+  }
 
-  savedList.unshift(item);
-  localStorage.setItem(_STORAGEKEY, JSON.stringify(savedList));
-}
+  getDataList() {
+    const savedData = localStorage.getItem(this.key);
+    const savedList = JSON.parse(savedData) ?? [];
+    return savedList;
+  }
 
-export function getTodoItems() {
-  const savedData = localStorage.getItem(_STORAGEKEY);
-  const savedList = JSON.parse(savedData) ?? [];
-  return savedList;
-}
+  getListSize() {
+    return this.getDataList().length;
+  }
 
-export function getTodoCount() {
-  return getTodoItems().length;
-}
+  updateDataById(id, name, state) {
+    const savedList = this.getDataList();
+    const findIndex = savedList.findIndex(data => {
+      return data.id === id;
+    });
 
-export function changeTodoTaskDone(id, done) {
-  const savedList = getTodoItems();
-  const taskIndex = savedList.findIndex(item => {
-    return item.id === id;
-  });
-  savedList[taskIndex].done = done;
-  localStorage.setItem(_STORAGEKEY, JSON.stringify(savedList));
-}
+    if (findIndex === -1) return;
+    savedList[findIndex][name] = state;
+    localStorage.setItem(this.key, JSON.stringify(savedList));
+  }
 
-export function deleteTodoTaskById(id) {
-  const savedList = getTodoItems();
-  const newList = savedList.filter(item => {
-    return item.id !== id;
-  });
-  localStorage.setItem(_STORAGEKEY, JSON.stringify(newList));
+  deleteDataById(id) {
+    const prevList = this.getDataList();
+    const newList = prevList.filter(item => {
+      return item.id !== id;
+    });
+    localStorage.setItem(this.key, JSON.stringify(newList));
+  }
 }

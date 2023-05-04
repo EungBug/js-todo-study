@@ -142,5 +142,6 @@ class TodoItem extends Component {
     btnDelete.addEventListener('click', () => {
       todoManager.deleteTodoItem(item.id);
     });
+    // btnDelete.addEventListener('click', todoManager.deleteTodoItem.bind(item.id));
   }
 }
