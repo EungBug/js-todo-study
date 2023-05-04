@@ -192,3 +192,59 @@ header {
     }
   }
 }
+
+// Timer
+.timer {
+  position: relative;
+}
+
+.circle {
+  border-radius: 50%;
+  width: 500px;
+  height: 500px;
+  position: relative;
+}
+
+.lines {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.line {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  border-radius: 1px;
+  top: calc(50% - 2px / 2);
+  background-color: $color-gray200;
+}
+
+.cover-circle {
+  border-radius: 50%;
+  width: 96%;
+  height: 96%;
+  background-color: $color-gray400;
+  position: absolute;
+  top: 2%;
+  left: 2%;
+}
+
+.fins {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.fin {
+  position: absolute;
+  width: 1px;
+  height: 50%;
+  left: calc(50% - 1px / 2);
+  top: 0%;
+  background: $color-blue;
+  z-index: 2;
+  transform-origin: bottom;
+}
