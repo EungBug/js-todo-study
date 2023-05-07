@@ -1,10 +1,20 @@
 import Component from './core/Component';
 import ToDoManager from './todo';
+import Timer from './Timer';
 
 // ToDo class의 인스턴스를 전역으로 생성하여 모든 컴포넌트에서
 // 컴포넌트마다 필요한 기능을 호출 할 수 있도록 했음
 const todoManager = new ToDoManager();
 export default class App extends Component {
+  render() {
+    const todoContainer = new TodoContainer().el;
+    const timer = new Timer().el;
+
+    this.el.append(todoContainer, timer);
+  }
+}
+
+class TodoContainer extends Component {
   render() {
     const todoList = new TodoList([]);
 
@@ -28,7 +38,7 @@ export default class App extends Component {
 
 // ToDo Header
 class TodoHeader extends Component {
-  constructor() {
+  constructor(showTimer) {
     super({
       tagName: 'header'
     });
@@ -36,9 +46,15 @@ class TodoHeader extends Component {
 
   render() {
     this.el.innerHTML = `
+      <div id="time-timer">Time Timer</div>
       <img src='/assets/rocket.png' alt='Rocket'/>
       <h1><span>To</span>Do</h1>
     `;
+    const timerBtn = this.el.querySelector('#time-timer');
+    timerBtn.addEventListener('click', () => {
+      const timer = document.querySelector('.timer');
+      timer.classList.remove('hide');
+    });
   }
 }
 

@@ -9,6 +9,8 @@ $color-gray400: #333333;
 $color-gray200: #d9d9d9;
 $color-gray100: #f2f2f2;
 $color-delete: #e25858;
+$color-white: #fff;
+$timer-size: 400px;
 
 body {
   background-color: $color-gray600;
@@ -16,6 +18,10 @@ body {
   * {
     box-sizing: border-box;
   }
+}
+
+.hide {
+  display: none !important;
 }
 
 /* HEADER */
@@ -26,6 +32,23 @@ header {
   gap: 12px;
   height: 200px;
   background-color: $color-gray700;
+
+  #time-timer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $color-font;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+
+  #time-timer:hover {
+    color: $color-blue;
+  }
 
   img {
     width: 22px;
@@ -195,14 +218,72 @@ header {
 
 // Timer
 .timer {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  min-width: 500px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0px 12px 17px 2px rgba($color: #111, $alpha: 0.12), 0px 5px 22px 4px rgba($color: #111, $alpha: 0.12),
+    0px 7px 8px -4px rgba($color: #111, $alpha: 0.12);
+  background-color: $color-gray400;
+
+  .timer-header {
+    width: 100%;
+    padding: 10px 0;
+
+    h2 {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 500;
+      color: $color-white;
+    }
+
+    span {
+      width: 40px;
+      height: 40px;
+      font-size: 24px;
+      font-weight: 700;
+      position: absolute;
+      top: 30px;
+      right: 20px;
+      color: $color-gray100;
+      cursor: pointer;
+    }
+  }
+
+  .btn {
+    width: 100px;
+    height: 36px;
+    background-color: $color-purple;
+    color: $color-white;
+    font-size: 20px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+  }
+
+  .btn.start {
+    background-color: $color-delete;
+  }
 }
 
 .circle {
   border-radius: 50%;
-  width: 500px;
-  height: 500px;
+  width: $timer-size;
+  height: $timer-size;
   position: relative;
+  margin-top: 40px;
 }
 
 .lines {
@@ -214,9 +295,9 @@ header {
 .line {
   position: absolute;
   width: 100%;
-  height: 2px;
-  border-radius: 1px;
-  top: calc(50% - 2px / 2);
+  height: 4px;
+  border-radius: 2px;
+  top: calc(50% - 4px / 2);
   background-color: $color-gray200;
 }
 
@@ -224,7 +305,7 @@ header {
   border-radius: 50%;
   width: 96%;
   height: 96%;
-  background-color: $color-gray400;
+  background-color: $color-gray500;
   position: absolute;
   top: 2%;
   left: 2%;
